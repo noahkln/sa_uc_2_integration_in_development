@@ -1,0 +1,19 @@
+
+FROM golang:1.19.4-alpine
+
+RUN go version
+
+COPY ./changed_dolt /dolt
+
+RUN cd /dolt/go && go install -buildvcs=false ./cmd/dolt
+
+# Test dolt
+RUN dolt version
+
+RUN mkdir -p /app/db
+RUN dolt clone noahkln/sa_uc_2_compatibility /app/db
+
+EXPOSE 3306
+
+CMD cd /app/db && \
+  dolt sql-server --host=0.0.0.0 --user=sa_uc_2 --password=sa_uc_2_password

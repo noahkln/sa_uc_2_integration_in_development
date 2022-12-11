@@ -1,0 +1,31 @@
+version: '3.8'
+
+name: sa_uc_2_compatibility
+
+services:
+  self_dolt:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.interface
+    ports:
+      - "33200:3306"
+
+  dolt:
+    image: dolthub/dolt:0.50.14
+    command: "sql-server --host=0.0.0.0 --user=sa_uc_2 --password=sa_uc_2_password"
+    ports:
+      - "33201:3306"
+    
+  pma:
+    image: phpmyadmin/phpmyadmin:5
+    ports:
+      - "8080:80"
+    links:
+      - dolt:db
+    
+  adminer:
+    image: adminer:4.8.1
+    ports:
+      - "8081:8080"
+    links:
+      - dolt:db

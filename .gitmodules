@@ -1,0 +1,3 @@
+[submodule "changed_dolt"]
+	path = changed_dolt
+	url = git@github.com:noahkln/dolt.git
