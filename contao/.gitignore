@@ -1,20 +1,20 @@
+# Created by .ignore support plugin (hsz.mobi)
+var
+vendor
+.idea
+.env
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
-/vendor/
-###< symfony/framework-bundle ###
+# will be symlinked by Contao.
+system/themes/flexible
+public/assets
+public/system/themes
+system/logs
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
+# generated
+public/bundles/*
+public/files/
+assets/
+system/
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+# configuration and secrets
+config/parameters.yml

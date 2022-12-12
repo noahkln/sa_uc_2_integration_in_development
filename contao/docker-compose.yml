@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  
+
+  mysql:
+    image: mariadb:10.3
+    ports:
+    - 3306:3306
+    env_file:
+    - '.env'
+    environment:
+    - MYSQL_DATABASE=${DATABASE_NAME}
+    - MYSQL_USER=${DATABASE_USER}
+    - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+    - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+
+  adminer:
+    image: adminer
+    restart: always
+    links:
+    - mysql:${DATABASE_HOST:-mysql}
+    labels:
+      - traefik.backend=adminer
+      - "traefik.frontend.rule=PathPrefix:/_adminer"
+    ports:
+      - 8081:8080

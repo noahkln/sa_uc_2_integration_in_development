@@ -16,23 +16,50 @@ services:
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
+  # web:
+  #   build:
+  #     context: ./contao
+  #   ports:
+  #     - 8080:80
+  #   volumes:
+  #     - ./contao/files:/var/www/html/files
+  #     - ./contao/templates:/var/www/html/templates
+  #   env_file:
+  #     - './contao/.env'
+  #   links:
+  #     - dolt:db
+
   web:
     build:
-      context: .
-      dockerfile: ./Dockerfile.contao.web
+      context: ./contao
     ports:
       - 8080:80
-    env_file:
-      - './contao/.env'
+    volumes:
+      #- .:/var/www/html  # use for development, but run composer install
+      - ./contao/files:/var/www/html/files
+      - ./contao/templates:/var/www/html/templates
+      - ./contao/config:/var/www/html/config
+      - ./contao/system/config:/var/www/html/system/config
     links:
-      - dolt:db
+    - dolt:dolt
+    env_file:
+    - './contao/.env'
+    environment:
+    - docker=true
+    - APP_ENV=dev
 
   dolt:
     build:
-      context: .
-      dockerfile: ./Dockerfile.contao.dolt
+      context: ./changed_dolt
     ports:
       - "33200:3306"
+
+  adminer:
+    image: adminer:4.8.1
+    ports:
+      - "8081:8080"
+    links:
+      - dolt:db
 
 volumes:
 ###> doctrine/doctrine-bundle ###

@@ -1,4 +1,23 @@
-vendor
-tests
-var
-symfony.lock
+# Created by .ignore support plugin (hsz.mobi)
+Dockerfile
+.gitignore
+.idea
+.env*
+.gitlab-ci.yml
+.travis.yml
+.dockerignore
+
+## Folders contao creates and fills automatically should not be copied to build context
+assets/
+vendor/
+system/cache/
+system/logs/
+system/modules/
+system/themes/flexible/
+system/tmp
+var/
+web/assets/
+web/bundles/
+web/share/
+web/system/
+
